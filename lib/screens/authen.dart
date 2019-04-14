@@ -86,7 +86,7 @@ Widget signUpButton(){
               child: Row(
                 children: <Widget>[signInButton(), signUpButton()],
               ),
-              margin: EdgeInsets.only(left: 50.0, right: 50.0),
+              margin: EdgeInsets.only(left: 100.0, right: 100.0,top: 35.0),
             )
           ],
         ),
