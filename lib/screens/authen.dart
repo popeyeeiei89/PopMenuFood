@@ -47,20 +47,35 @@ class _AuthenState extends State<Authen> {
 // SignIn
   Widget signInButton() {
     return RaisedButton(
-      child: Text('sign In'),onPressed: (){},
+      shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(35.0)),
+      color: Colors.pink[50],
+      child: Text(
+        'sign In',
+        style: TextStyle(color: Colors.deepOrange),
+      ),
+      onPressed: () {},
     );
   }
 
-// SignUp 
-Widget signUpButton(){
-  return RaisedButton(
-    child: Text('sign up'),onPressed: (){},
-  )
-}
+// SignUp
+  Widget signUpButton() {
+    return RaisedButton(
+      shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(35.0)),
+      color: Colors.pink[50],
+      child: Text(
+        'sign up',
+        style: TextStyle(color: Colors.deepOrange),
+      ),
+      onPressed: () {},
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -84,9 +99,22 @@ Widget signUpButton(){
             ),
             Container(
               child: Row(
-                children: <Widget>[signInButton(), signUpButton()],
+                children: <Widget>[
+                  new Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(right: 8.0),
+                      child: signInButton(),
+                    ),
+                  ),
+                  new Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(left: 8.0),
+                      child: signUpButton(),
+                    ),
+                  )
+                ],
               ),
-              margin: EdgeInsets.only(left: 100.0, right: 100.0,top: 35.0),
+              margin: EdgeInsets.only(left: 100.0, right: 100.0, top: 35.0),
             )
           ],
         ),
