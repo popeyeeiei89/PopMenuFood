@@ -26,9 +26,10 @@ class _RegisterState extends State<Register> {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
 
-      print('name ==>> $name, $user, password ==>> $password');
+      String urlPHP = 'http://www.androidthai.in.th/note/addDataNote.php?isAdd=true&Name=$name&User=$user&Password=$password';
+      print(urlPHP);
 
-      
+
     } // if
   } // uplond
 
