@@ -6,29 +6,61 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+// Explicit
+  final formKey = GlobalKey<FormState>();
+  String name, user, password;
+
   Widget uplondIcon() {
     return IconButton(
       icon: Icon(Icons.cloud_upload),
       onPressed: () {
         print('You Click Uplond');
+        uplondValueToSever();
       },
     );
   }
+
+  void uplondValueToSever() {
+    print(formKey.currentState.validate());
+
+    if (formKey.currentState.validate()) {
+      formKey.currentState.save();
+
+      print('name ==>> $name, $user, password ==>> $password');
+
+      
+    } // if
+  } // uplond
 
 // Name
   Widget nameTextFormField() {
     return TextFormField(
       decoration:
           InputDecoration(labelText: 'Name : ', hintText: 'Name in Eng'),
+      validator: (String value) {
+        if (value.length == 0) {
+          return 'Please Fill User in Blank';
+        }
+      },
+      onSaved: (String value) {
+        name = value;
+      },
     );
   }
 
 // User
   Widget userTextFormField() {
     return TextFormField(
-      decoration:
-          InputDecoration(labelText: 'User', hintText: 'fill user here'),
-    );
+        decoration:
+            InputDecoration(labelText: 'User', hintText: 'fill user here'),
+        validator: (String value) {
+          if (value.length == 0) {
+            return 'Please Fill in Blank';
+          }
+        },
+        onSaved: (String value) {
+          user = value;
+        });
   }
 
 // Password
@@ -36,6 +68,14 @@ class _RegisterState extends State<Register> {
     return TextFormField(
       decoration:
           InputDecoration(labelText: 'Password', hintText: 'More 6 Charactor'),
+      validator: (String value) {
+        if (value.length == 0) {
+          return 'Please Fill in Blank';
+        }
+      },
+      onSaved: (String value) {
+        password = value;
+      },
     );
   }
 
@@ -47,7 +87,9 @@ class _RegisterState extends State<Register> {
           title: Text('Register'),
           actions: <Widget>[uplondIcon()],
         ),
-        body: Container(
+        body: Form(
+          key: formKey,
+          child: Container(
             color: Colors.pink[50],
             padding: EdgeInsets.all(50.0),
             child: Container(
@@ -61,6 +103,8 @@ class _RegisterState extends State<Register> {
                 userTextFormField(),
                 passwordTextFormField()
               ]),
-            )));
+            ),
+          ),
+        ));
   }
 }
