@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; 
+import 'package:http/http.dart' show get;
+import 'dart:convert';
 
 class Register extends StatefulWidget {
   @override
@@ -10,17 +12,17 @@ class _RegisterState extends State<Register> {
   final formKey = GlobalKey<FormState>();
   String name, user, password;
 
-  Widget uplondIcon() {
+  Widget uplondIcon(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.cloud_upload),
       onPressed: () {
         print('You Click Uplond');
-        uplondValueToSever();
+        uplondValueToSever(context);
       },
     );
   }
 
-  void uplondValueToSever() {
+  void uplondValueToSever(BuildContext context) async{
     print(formKey.currentState.validate());
 
     if (formKey.currentState.validate()) {
@@ -28,6 +30,15 @@ class _RegisterState extends State<Register> {
 
       String urlPHP = 'http://www.androidthai.in.th/note/addDataNote.php?isAdd=true&Name=$name&User=$user&Password=$password';
       print(urlPHP);
+
+      var response = await get(urlPHP);
+      var resule = json.decode(response.body);
+      print('result ==>>> $resule');
+
+      if(resule.toString() == 'true') {
+        Navigator.pop(context);
+
+      }
 
 
 
@@ -87,7 +98,7 @@ class _RegisterState extends State<Register> {
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           title: Text('Register'),
-          actions: <Widget>[uplondIcon()],
+          actions: <Widget>[uplondIcon(context)],
         ),
         body: Form(
           key: formKey,
