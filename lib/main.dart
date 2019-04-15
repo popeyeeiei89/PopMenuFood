@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/authen.dart';
+import 'screens/register.dart';
+
 // main Method
 void main() {
   runApp(App());

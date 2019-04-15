@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'register.dart';
 
 class Authen extends StatefulWidget {
   @override
@@ -59,7 +60,7 @@ class _AuthenState extends State<Authen> {
   }
 
 // SignUp
-  Widget signUpButton() {
+  Widget signUpButton(BuildContext context) {
     return RaisedButton(
       shape: new RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(35.0)),
@@ -68,8 +69,17 @@ class _AuthenState extends State<Authen> {
         'sign up',
         style: TextStyle(color: Colors.deepOrange),
       ),
-      onPressed: () {},
+      onPressed: () {
+        print('You Click SignUp');
+        goToRegister(context);
+      },
     );
+  }
+
+  void goToRegister(BuildContext context) {
+    var routeRegister =
+        new MaterialPageRoute(builder: (BuildContext context) => Register());
+    Navigator.of(context).push(routeRegister);
   }
 
   @override
@@ -109,7 +119,7 @@ class _AuthenState extends State<Authen> {
                   new Expanded(
                     child: Container(
                       margin: EdgeInsets.only(left: 8.0),
-                      child: signUpButton(),
+                      child: signUpButton(context),
                     ),
                   )
                 ],
