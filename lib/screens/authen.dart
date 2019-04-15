@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'register.dart';
+import 'package:http/http.dart' show get;
+import 'dart:convert';
 
 class Authen extends StatefulWidget {
   @override
@@ -80,15 +82,25 @@ class _AuthenState extends State<Authen> {
     );
   }
 
-  void checkAuthen() {
+  void checkAuthen() async {
     if (formkey.currentState.validate()) {
       formkey.currentState.save();
 
       String urlJSON =
           'http://www.androidthai.in.th/note/getUserWhereUserNote.php?isAdd=true&User=$user';
-      print('user ==> $user, password ==> $password');
-    }
-  }
+      print(urlJSON);
+      
+      var respones = await get(urlJSON);
+      var result = json.decode(respones.body);
+      print(result.toString());
+
+      if (result.toString() == 'null') {
+        print('user false');
+      } else {
+        print(result.toString());
+      }
+    } // if
+  } //checkAuthen
 
 // SignUp
   Widget signUpButton(BuildContext context) {
