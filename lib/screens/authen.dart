@@ -10,6 +10,8 @@ class _AuthenState extends State<Authen> {
 // Explicit
   String titleUser = "user";
   String hintUser = "hint";
+  String user, password;
+  final formkey = GlobalKey<FormState>();
 
 // Show logo
   Widget showlogo() {
@@ -32,6 +34,14 @@ class _AuthenState extends State<Authen> {
           labelText: titleUser,
           hintText: hintUser,
           labelStyle: TextStyle(fontSize: 35.0, color: Colors.black)),
+      validator: (String value) {
+        if (value.length == 0) {
+          return 'Have Space';
+        }
+      },
+      onSaved: (String value) {
+        user = value;
+      },
     );
   }
 
@@ -42,6 +52,14 @@ class _AuthenState extends State<Authen> {
           labelText: 'Password',
           hintText: 'More 6 Charactor',
           labelStyle: TextStyle(fontSize: 35.0, color: Colors.black)),
+      validator: (String value) {
+        if (value.length == 0) {
+          return 'Have Space';
+        }
+      },
+      onSaved: (String value) {
+        password = value;
+      },
     );
   }
 
@@ -55,8 +73,21 @@ class _AuthenState extends State<Authen> {
         'sign In',
         style: TextStyle(color: Colors.deepOrange),
       ),
-      onPressed: () {},
+      onPressed: () {
+        print('You Click SignIn');
+        checkAuthen();
+      },
     );
+  }
+
+  void checkAuthen() {
+    if (formkey.currentState.validate()) {
+      formkey.currentState.save();
+
+      String urlJSON =
+          'http://www.androidthai.in.th/note/getUserWhereUserNote.php?isAdd=true&User=$user';
+      print('user ==> $user, password ==> $password');
+    }
   }
 
 // SignUp
@@ -85,50 +116,53 @@ class _AuthenState extends State<Authen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Colors.orange, Colors.pink], begin: Alignment(0, 1))),
-        padding: EdgeInsets.only(top: 100.0),
-        alignment: Alignment.topCenter,
-        child: Column(
-          children: <Widget>[
-            showlogo(),
-            Container(
-              margin: EdgeInsets.only(top: 30.0),
-              child: showAppName(),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 100.0, right: 100.0),
-              child: userTextFromField(),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 100.0, right: 100.0),
-              child: passwordTextFormField(),
-            ),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  new Expanded(
-                    child: Container(
-                      margin: EdgeInsets.only(right: 8.0),
-                      child: signInButton(),
-                    ),
+        resizeToAvoidBottomPadding: false,
+        body: Form(
+          key: formkey,
+          child: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Colors.orange, Colors.pink],
+                    begin: Alignment(0, 1))),
+            padding: EdgeInsets.only(top: 100.0),
+            alignment: Alignment.topCenter,
+            child: Column(
+              children: <Widget>[
+                showlogo(),
+                Container(
+                  margin: EdgeInsets.only(top: 30.0),
+                  child: showAppName(),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 100.0, right: 100.0),
+                  child: userTextFromField(),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 100.0, right: 100.0),
+                  child: passwordTextFormField(),
+                ),
+                Container(
+                  child: Row(
+                    children: <Widget>[
+                      new Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(right: 8.0),
+                          child: signInButton(),
+                        ),
+                      ),
+                      new Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(left: 8.0),
+                          child: signUpButton(context),
+                        ),
+                      )
+                    ],
                   ),
-                  new Expanded(
-                    child: Container(
-                      margin: EdgeInsets.only(left: 8.0),
-                      child: signUpButton(context),
-                    ),
-                  )
-                ],
-              ),
-              margin: EdgeInsets.only(left: 100.0, right: 100.0, top: 35.0),
-            )
-          ],
-        ),
-      ),
-    );
+                  margin: EdgeInsets.only(left: 100.0, right: 100.0, top: 35.0),
+                )
+              ],
+            ),
+          ),
+        ));
   }
 }
