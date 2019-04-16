@@ -83,7 +83,7 @@ class _RegisterState extends State<Register> {
           InputDecoration(labelText: 'Password', hintText: 'More 6 Charactor'),
       validator: (String value) {
         if (value.length == 0) {
-          return 'Please Fill in Blank';
+          return 'Please Fill in Blanks';
         }
       },
       onSaved: (String value) {
